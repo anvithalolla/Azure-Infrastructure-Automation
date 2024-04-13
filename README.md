@@ -1,4 +1,4 @@
-# CI/CD Pipeline for Azure with Terraform
+# Azure Infrastructure Automation With CI/CD Pipeline Using Terraform 
 
 This project creates a robust CI/CD pipeline using Azure and Terraform, focusing on automating the setup and management of a suite of Azure resources. The goal is to provide a comprehensive, error-minimized automated system that can deploy and manage complex cloud infrastructures efficiently. This project involves creating a pipeline using Terraform, which automates the provisioning of an Azure account that includes key components such as resource groups, storage accounts, and a data factory. This setup demonstrates the utility of Infrastructure as Code (IaC) in managing and deploying cloud resources predictably and at scale.
 
@@ -75,7 +75,7 @@ resource "azurerm_resource_group" "rg" {
 
 
 
-## Storage Account Setup
+## Storage Account Module With Terraform
 
 Within the resource group, a storage account is created. This account is critical for storing various CI/CD artifacts:
 
@@ -110,7 +110,7 @@ resource "azurerm_storage_blob" "blob" {
 
 
 
-## Automating Azure Data Factory
+## Automating Azure Data Factory WIth Terraform
 Terraform scripts automate the setup of Azure Data Factory, linking it with the storage accounts and defining the data pipelines necessary for data movement:
 
 ```hcl
@@ -164,8 +164,5 @@ terraform destroy -var-file="variables.tfvars"
 ## Contributing
 Contributions are welcome! Feel free to fork the repository, make changes, and submit a pull request. For major changes, please open an issue first to discuss what you would like to change.
 
-```
-This README now includes placeholders for images corresponding to each major section, enhancing visual engagement and providing a clearer understanding of the project components and workflows. Replace `"path_to_image_here"` with the actual paths to your images when they are ready to be included.
-```
 
 
