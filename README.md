@@ -1,6 +1,6 @@
 # CI/CD Pipeline for Azure with Terraform
 
-This project is designed to explore how Azure and Terraform can be utilized to create a CI/CD pipeline, aiming to automate processes with minimal errors. The setup involves creating a robust Azure infrastructure including resource groups, storage accounts, and data factories, orchestrated using Terraform.
+This project creates a robust CI/CD pipeline using Azure and Terraform, focusing on automating the setup and management of a suite of Azure resources. The goal is to provide a comprehensive, error-minimized automated system that can deploy and manage complex cloud infrastructures efficiently. This project involves creating a pipeline using Terraform, which automates the provisioning of an Azure account that includes key components such as resource groups, storage accounts, and a data factory. This setup demonstrates the utility of Infrastructure as Code (IaC) in managing and deploying cloud resources predictably and at scale.
 
 ## Table of Contents
 
@@ -25,9 +25,9 @@ This project uses Terraform to create a pipeline capable of managing an Azure ac
 ## System Architecture
 
 The architecture utilizes Azure services such as Resource Groups, Storage Accounts, and Data Factories:
-- **Resource Groups** serve as units of deployment for managing resources.
-- **Storage Accounts** store deployment artifacts and logs.
-- **Data Factories** orchestrate data movement and transformation.
+- **Resource Groups** Serve as containers for grouping related resources for easy management, access control, and cost reporting.
+- **Storage Accounts** Used for storing CI/CD artifacts such as build outputs, logs, and binaries. They are configured to use blob storage for unstructured data, accessible globally via HTTP/HTTPS.
+- **Data Factories** Facilitates data integration services that allow data-driven workflow creation for orchestrating and automating data movement and data transformation.
 
 ![System Architecture](path_to_image_here)
 
