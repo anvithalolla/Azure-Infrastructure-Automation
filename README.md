@@ -63,3 +63,38 @@ resource "azurerm_storage_account" "storage" {
     environment = "development"
   }
 }
+```
+Additional containers and blobs within the storage account are set up to organize data effectively.
+
+## Automating Azure Data Factory
+Terraform scripts automate the setup of Azure Data Factory, linking it with the storage accounts and defining the data pipelines necessary for data movement:
+
+```hcl
+resource "azurerm_data_factory" "adf" {
+  name                = var.data_factory_name
+  resource_group_name = var.resource_group_name
+  location            = var.location
+}
+```
+## Testing and Validation
+The configuration is applied using `terraform apply`, and results are validated in the Azure portal. This ensures that data is transferred correctly and all resources are configured as expected.
+
+## Destroying Resources
+To clean up resources, use:
+
+```hcl
+terraform destroy -var-file="variables.tfvars"
+```
+
+## Future Work
+- Enhance the automation by including additional Azure services.
+- Improve error handling and add more robust testing frameworks.
+
+## Contributing
+Contributions are welcome! Feel free to fork the repository, make changes, and submit a pull request. For major changes, please open an issue first to discuss what you would like to change.
+
+```hcl
+This README now includes placeholders for images corresponding to each major section, enhancing visual engagement and providing a clearer understanding of the project components and workflows. Replace `"path_to_image_here"` with the actual paths to your images when they are ready to be included.
+```
+
+
