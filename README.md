@@ -49,35 +49,90 @@ The Terraform configuration starts with initializing the Terraform provider usin
 
 ![Terraform Initialization](path_to_image_here)
 
-## Storage Account Setup
+## Resource Group Configuration
+The resource group is defined in Terraform with specifications for name, location, and tags. This is crucial for organizing resources within Azure:
 
-A Terraform module creates the storage account and its containers:
 ```hcl
-resource "azurerm_storage_account" "storage" {
-  name                   = var.storage_account_name
-  resource_group_name    = var.resource_group_name
-  location               = var.location
-  account_tier           = "Standard"
-  account_replication_type = "LRS"
-  tags = {
+resource "azurerm_resource_group" "rg" {
+  name     = var.resource_group_name
+  location = var.location
+  tags     = {
     environment = "development"
   }
 }
 ```
+
+## Storage Account Setup
+
+Within the resource group, a storage account is created. This account is critical for storing various CI/CD artifacts:
+
+```hcl
+resource "azurerm_storage_account" "storage" {
+  name                    = var.storage_account_name
+  resource_group_name     = azurerm_resource_group.rg.name
+  location                = var.location
+  account_tier            = "Standard"
+  account_replication_type = "LRS"
+}
+  }
+}
+```
 Additional containers and blobs within the storage account are set up to organize data effectively.
+
+```hcl
+resource "azurerm_storage_container" "container" {
+  name                  = "containername"
+  storage_account_name  = azurerm_storage_account.storage.name
+  container_access_type = "private"
+}
+
+resource "azurerm_storage_blob" "blob" {
+  name                   = "test.txt"
+  storage_account_name   = azurerm_storage_account.storage.name
+  storage_container_name = azurerm_storage_container.container.name
+  type                   = "Block"
+  source_content         = "Hello! Welcome to my project"
+}
+```
+
+
 
 ## Automating Azure Data Factory
 Terraform scripts automate the setup of Azure Data Factory, linking it with the storage accounts and defining the data pipelines necessary for data movement:
 
 ```hcl
 resource "azurerm_data_factory" "adf" {
-  name                = var.data_factory_name
-  resource_group_name = var.resource_group_name
-  location            = var.location
+  name                = "example-adf"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
 }
+
+resource "azurerm_data_factory_linked_service_azure_blob_storage" "adf_ls" {
+  name            = "example-linked-service"
+  resource_group_name = azurerm_resource_group.rg.name
+  data_factory_name   = azurerm_data_factory.adf.name
+  url                = azurerm_storage_account.storage.primary_blob_endpoint
+}
+
+resource "azurerm_data_factory_pipeline" "adf_pipeline" {
+  name                = "example-pipeline"
+  resource_group_name = azurerm_resource_group.rg.name
+  data_factory_name   = azurerm_data_factory.adf.name
+  activities_json     = <<JSON
+  [
+    {
+      "name": "Copy Data",
+      "type": "Copy",
+      "inputs": [{ "referenceName": "input-dataset", "type": "DatasetReference" }],
+      "outputs": [{ "referenceName": "output-dataset", "type": "DatasetReference" }]
+    }
+  ]
+  JSON
+}
+
 ```
 ## Testing and Validation
-The configuration is applied using `terraform apply`, and results are validated in the Azure portal. This ensures that data is transferred correctly and all resources are configured as expected.
+Post-deployment, the pipeline is tested to ensure all resources are correctly provisioned and functioning as expected. This includes verifying data movement through Data Factory pipelines and accessing blobs within the storage account.
 
 ## Destroying Resources
 To clean up resources, use:
@@ -93,7 +148,7 @@ terraform destroy -var-file="variables.tfvars"
 ## Contributing
 Contributions are welcome! Feel free to fork the repository, make changes, and submit a pull request. For major changes, please open an issue first to discuss what you would like to change.
 
-```hcl
+```
 This README now includes placeholders for images corresponding to each major section, enhancing visual engagement and providing a clearer understanding of the project components and workflows. Replace `"path_to_image_here"` with the actual paths to your images when they are ready to be included.
 ```
 
