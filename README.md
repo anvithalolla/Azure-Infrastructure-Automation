@@ -18,7 +18,3 @@ This repository is an Infrastructure as Code (IaC) project that leverages terraf
     - `terraform plan` (to see the changes that will be applied)
     - `terraform apply` (to apply the changes)
     - `terraform destroy` (to destroy the infrastructure)
-
-
-## Video
-[![CICD for Modern Data Engineering](https://img.youtube.com/vi/bCwLJUAqmC0/0.jpg)](https://youtu.be/bCwLJUAqmC0)
