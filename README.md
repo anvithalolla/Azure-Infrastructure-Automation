@@ -54,7 +54,7 @@ The architecture utilizes Azure services such as Resource Groups, Storage Accoun
 The Terraform configuration starts with initializing the Terraform provider using `terraform init`. The configuration details are defined in `main.tf` and variable values are stored in `variable.tf`.
 
 
-<img width="344" alt="image" src="https://github.com/anvithalolla/Azure-CI-CD-Pipeline/assets/55392153/f6952fdb-7708-4ff4-bfe3-10a7b16639bb">
+<img width="500" alt="image" src="https://github.com/anvithalolla/Azure-CI-CD-Pipeline/assets/55392153/f6952fdb-7708-4ff4-bfe3-10a7b16639bb">
 
 
 ## Resource Group Configuration
