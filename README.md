@@ -40,8 +40,8 @@ The architecture utilizes Azure services such as Resource Groups, Storage Accoun
 
 ## Installation Instructions
 
-1. Install Azure CLI and link it to your Azure account.
-2. Install Terraform and set up your Python editor.
+1. `Azure CLI`
+2. `Terraform`
 
 ## Azure Infrastructure Automation
 
